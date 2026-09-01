@@ -443,6 +443,49 @@
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
+    
+    /* Responsive Adjustments for Mobile */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding-top: 5rem;
+            text-align: center;
+        }
+        .display-3 {
+            font-size: 2.5rem;
+        }
+        .display-5 {
+            font-size: 2rem;
+        }
+        .display-6 {
+            font-size: 1.5rem;
+        }
+        .carousel-item {
+            min-height: 550px !important;
+        }
+        .carousel-caption {
+            padding-bottom: 2rem;
+        }
+        .carousel-caption p.lead {
+            font-size: 1rem;
+        }
+        .tech-marquee-items {
+            gap: 2rem;
+            padding-right: 2rem;
+        }
+        .tech-marquee-item img {
+            height: 25px;
+        }
+        .tech-marquee-item span {
+            font-size: 0.9rem;
+        }
+        .service-icon-box {
+            min-height: 250px !important;
+        }
+        .px-5 {
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+        }
+    }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
