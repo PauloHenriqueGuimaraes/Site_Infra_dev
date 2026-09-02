@@ -18,7 +18,8 @@ exports.submitForm = async (req, res) => {
 
         if (error) {
             console.error('Erro no Supabase:', error);
-            return res.status(500).send(`Erro ao salvar o orçamento no banco: ${error.message}`);
+            const urlUsada = process.env.SUPABASE_URL || 'NENHUMA (Usou a falsa)';
+            return res.status(500).send(`Erro ao salvar no banco (URL: ${urlUsada}): ${error.message}`);
         }
         
         res.render('orcamento', { title: 'Orçamento Enviado', success: true });
