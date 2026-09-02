@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+
+<div class="container py-6 mt-5 animate-up">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="text-center mb-4">
+                <h6 class="text-secondary fw-bold tracking-widest text-uppercase mb-2">Área Restrita</h6>
+                <h2 class="display-6 fw-bold text-white mb-3">Acesso Administrativo</h2>
+                <div class="title-separator mx-auto bg-gradient mb-4" style="background: linear-gradient(90deg, #64748b, #94a3b8);"></div>
+            </div>
+
+            <div class="service-card p-4 p-md-5 border border-secondary border-opacity-25 shadow-lg">
+                <% if (error) { %>
+                    <div class="alert alert-danger bg-danger bg-opacity-25 border-danger text-white text-center rounded-3 mb-4">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i><%= error %>
+                    </div>
+                <% } %>
+
+                <form action="/admin/login" method="POST">
+                    <div class="mb-4">
+                        <label for="email" class="form-label text-light fw-semibold">E-mail</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-light"><i class="bi bi-person-fill"></i></span>
+                            <input type="email" class="form-control rounded-end" id="email" name="email" required placeholder="admin@pgxtech.com">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <label for="password" class="form-label text-light fw-semibold">Senha</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-light"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" class="form-control rounded-end" id="password" name="password" required placeholder="******">
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-secondary text-white btn-lg rounded-pill shadow-lg hover-lift py-2 fw-bold">
+                            Entrar no Painel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

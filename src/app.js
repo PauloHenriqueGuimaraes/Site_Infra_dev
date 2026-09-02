@@ -3,6 +3,13 @@ const path = require('path');
 const webRoutes = require('./routes/web');
 
 const app = express();
+const cookieParser = require('cookie-parser');
+require('./database/db'); // Inicializa o banco
+
+// Middlewares
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
 // Configurar o EJS como view engine
 app.set('view engine', 'ejs');

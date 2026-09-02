@@ -86,7 +86,7 @@ body {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255,255,255,0.8);
+  color: rgba(255, 255, 255, 0.8);
   font-weight: 500;
 }
 
@@ -100,6 +100,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -110,13 +111,72 @@ body {
   animation: fadeInUp 0.8s ease forwards;
 }
 
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
+.delay-1 {
+  animation-delay: 0.2s;
+}
+
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
 /* Animated Background */
-.animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; background: #0f172a; pointer-events: none; }
-.animated-bg .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: drift 20s infinite ease-in-out alternate; }
-.orb-1 { width: 400px; height: 400px; background: #38bdf8; top: -10%; left: -10%; animation-duration: 25s; }
-.orb-2 { width: 500px; height: 500px; background: #818cf8; bottom: -20%; right: -10%; animation-duration: 30s; }
-.orb-3 { width: 350px; height: 350px; background: #2dd4bf; top: 40%; left: 60%; animation-duration: 22s; }
-@keyframes drift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(100px, 50px) scale(1.2); } }
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  background: #0f172a;
+  pointer-events: none;
+}
+
+.animated-bg .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  animation: drift 20s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: #38bdf8;
+  top: -10%;
+  left: -10%;
+  animation-duration: 25s;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: #818cf8;
+  bottom: -20%;
+  right: -10%;
+  animation-duration: 30s;
+}
+
+.orb-3 {
+  width: 350px;
+  height: 350px;
+  background: #2dd4bf;
+  top: 40%;
+  left: 60%;
+  animation-duration: 22s;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(100px, 50px) scale(1.2);
+  }
+}

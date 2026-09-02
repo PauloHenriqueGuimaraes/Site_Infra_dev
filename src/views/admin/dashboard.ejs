@@ -1,0 +1,108 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid py-6 mt-5 animate-up" style="max-width: 1400px;">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h6 class="text-secondary fw-bold tracking-widest text-uppercase mb-2">Painel de Controle</h6>
+            <h2 class="display-6 fw-bold text-white mb-0">Gestão de Orçamentos</h2>
+            <div class="title-separator bg-gradient mt-2" style="width: 80px; background: linear-gradient(90deg, #64748b, #94a3b8);"></div>
+        </div>
+        <div class="d-flex gap-3">
+            <a href="/admin/usuarios" class="btn btn-outline-light rounded-pill px-4">
+                <i class="bi bi-people-fill me-2"></i>Usuários
+            </a>
+            <a href="/admin/logout" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-box-arrow-right me-2"></i>Sair
+            </a>
+        </div>
+    </div>
+
+    <div class="service-card p-4 border border-secondary border-opacity-25 shadow-lg overflow-auto custom-scrollbar">
+        <% if (orcamentos && orcamentos.length > 0) { %>
+            <table class="table table-dark table-hover table-borderless align-middle mb-0">
+                <thead class="border-bottom border-secondary">
+                    <tr>
+                        <th class="py-3 text-secondary">Data</th>
+                        <th class="py-3 text-secondary">Nome do Cliente</th>
+                        <th class="py-3 text-secondary">Telefone / WhatsApp</th>
+                        <th class="py-3 text-secondary">Categoria Desejada</th>
+                        <th class="py-3 text-secondary text-end">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orcamentos.forEach(function(orc) { %>
+                        <tr class="border-bottom border-gray-800" style="transition: background 0.2s;">
+                            <td class="py-3 text-light opacity-75">
+                                <%= new Date(orc.DataCriacao).toLocaleString('pt-BR') %>
+                            </td>
+                            <td class="py-3 fw-bold text-white"><%= orc.Nome %></td>
+                            <td class="py-3">
+                                <a href="https://wa.me/55<%= orc.Telefone.replace(/\D/g, '') %>" target="_blank" class="text-success text-decoration-none hover-scale d-inline-block">
+                                    <i class="bi bi-whatsapp me-1"></i> <%= orc.Telefone %>
+                                </a>
+                            </td>
+                            <td class="py-3">
+                                <div class="mb-2">
+                                    <span class="badge bg-secondary bg-opacity-25 text-light border border-secondary border-opacity-25 rounded-pill px-3 py-2">
+                                        <%= orc.Categoria %>
+                                    </span>
+                                </div>
+                                <% if (orc.Descricao && orc.Descricao.trim() !== '') { %>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill mt-1" data-bs-toggle="modal" data-bs-target="#descModal<%= orc.Id %>">
+                                        <i class="bi bi-chat-left-text me-1"></i>Ler Detalhes
+                                    </button>
+                                <% } %>
+                            </td>
+                            <td class="py-3 text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="https://wa.me/55<%= orc.Telefone.replace(/\D/g, '') %>?text=Olá <%= orc.Nome.split(' ')[0] %>, recebemos sua solicitação de orçamento sobre <%= orc.Categoria %> pela PG Tech!" target="_blank" class="btn btn-sm btn-success rounded-pill px-3">
+                                        <i class="bi bi-whatsapp me-1"></i>Responder
+                                    </a>
+                                    <form action="/admin/orcamento/deletar/<%= orc.Id %>" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este orçamento permanentemente?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                            <i class="bi bi-trash-fill me-1"></i>Excluir
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div class="text-center py-5">
+                <i class="bi bi-inbox text-secondary mb-3 d-block" style="font-size: 3rem;"></i>
+                <h4 class="text-light">Nenhum orçamento recebido ainda.</h4>
+                <p class="text-secondary mb-0">Assim que um cliente preencher o formulário, ele aparecerá aqui.</p>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<% if (orcamentos && orcamentos.length > 0) { %>
+    <% orcamentos.forEach(function(orc) { %>
+        <% if (orc.Descricao && orc.Descricao.trim() !== '') { %>
+            <!-- Modal de Detalhes -->
+            <div class="modal fade" id="descModal<%= orc.Id %>" tabindex="-1" aria-labelledby="descModalLabel<%= orc.Id %>" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content bg-dark text-light border border-secondary border-opacity-25 shadow-lg">
+                        <div class="modal-header border-secondary">
+                            <h5 class="modal-title text-secondary" id="descModalLabel<%= orc.Id %>">
+                                <i class="bi bi-card-text me-2"></i>Detalhes do Projeto
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                        </div>
+                        <div class="modal-body text-start">
+                            <p class="mb-0 text-white opacity-75 fs-6" style="white-space: pre-wrap;"><%= orc.Descricao %></p>
+                        </div>
+                        <div class="modal-footer border-secondary">
+                            <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% }); %>
+<% } %>
+
+<%- include('../partials/footer') %>
