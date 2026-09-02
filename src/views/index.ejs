@@ -162,7 +162,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_sistem/ColdWatch.jpeg'">
-                                <img src="/images/img_sistem/ColdWatch.jpeg" class="d-block w-100" alt="ColdWatch IoT" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_sistem/ColdWatch.jpeg" class="d-block w-100 carousel-img-mobile" alt="ColdWatch IoT" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
                     </div>
@@ -209,17 +209,17 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_sistem/Sistema.jpeg'">
-                                <img src="/images/img_sistem/Sistema.jpeg" class="d-block w-100" alt="Sistema Desenvolvido 1" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_sistem/Sistema.jpeg" class="d-block w-100 carousel-img-mobile" alt="Sistema Desenvolvido 1" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_sistem/Sistema -.jpeg'">
-                                <img src="/images/img_sistem/Sistema -.jpeg" class="d-block w-100" alt="Sistema Desenvolvido 2" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_sistem/Sistema -.jpeg" class="d-block w-100 carousel-img-mobile" alt="Sistema Desenvolvido 2" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_sistem/Sistema --.jpeg'">
-                                <img src="/images/img_sistem/Sistema --.jpeg" class="d-block w-100" alt="Sistema Desenvolvido 3" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_sistem/Sistema --.jpeg" class="d-block w-100 carousel-img-mobile" alt="Sistema Desenvolvido 3" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
                     </div>
@@ -281,18 +281,18 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_infra/dashboard-pfsense.png'">
-                                <img src="/images/img_infra/dashboard-pfsense.png" class="d-block w-100" alt="Painel do pfSense" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_infra/dashboard-pfsense.png" class="d-block w-100 carousel-img-mobile" alt="Painel do pfSense" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
 
                         <div class="carousel-item">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_infra/StorageReview-Proxmox-VE-8-0-Cluster-Summary.png'">
-                                <img src="/images/img_infra/StorageReview-Proxmox-VE-8-0-Cluster-Summary.png" class="d-block w-100" alt="Painel Proxmox" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_infra/StorageReview-Proxmox-VE-8-0-Cluster-Summary.png" class="d-block w-100 carousel-img-mobile" alt="Painel Proxmox" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
                         <div class="carousel-item">
                             <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="document.getElementById('modalImage').src='/images/img_infra/painel-microsoft-1920x1080.jpg'">
-                                <img src="/images/img_infra/painel-microsoft-1920x1080.jpg" class="d-block w-100" alt="Painel Microsoft" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
+                                <img src="/images/img_infra/painel-microsoft-1920x1080.jpg" class="d-block w-100 carousel-img-mobile" alt="Painel Microsoft" style="height: 300px; object-fit: contain; object-position: center; background: #000; cursor: zoom-in;" title="Clique para ampliar" />
                             </a>
                         </div>
                     </div>
@@ -326,9 +326,13 @@
 
 <style>
     /* Premium UI Tweaks */
+    html, body { overflow-x: hidden; width: 100%; }
     .tracking-wide { letter-spacing: 0.05em; }
     .tracking-widest { letter-spacing: 0.1em; }
     .py-6 { padding-top: 5rem; padding-bottom: 5rem; }
+    @media (max-width: 768px) {
+        .py-6 { padding-top: 3rem; padding-bottom: 3rem; }
+    }
     .mb-6 { margin-bottom: 5rem; }
     
     .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -460,13 +464,18 @@
             font-size: 1.5rem;
         }
         .carousel-item {
-            min-height: 550px !important;
+            min-height: auto !important;
+            padding-bottom: 0;
         }
         .carousel-caption {
-            padding-bottom: 2rem;
+            position: relative !important;
+            right: 0;
+            left: 0;
+            padding: 3rem 1rem 4rem 1rem !important;
         }
         .carousel-caption p.lead {
-            font-size: 1rem;
+            font-size: 0.95rem;
+            margin-bottom: 0;
         }
         .tech-marquee-items {
             gap: 2rem;
@@ -484,6 +493,9 @@
         .px-5 {
             padding-left: 1.5rem !important;
             padding-right: 1.5rem !important;
+        }
+        .carousel-img-mobile {
+            height: 220px !important;
         }
     }
 </style>
