@@ -2,7 +2,11 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
-const dbPath = path.resolve(__dirname, 'database.sqlite');
+// Na Vercel, o sistema de arquivos é read-only, exceto a pasta /tmp.
+// IMPORTANTE: Arquivos no /tmp são apagados a cada deploy ou quando a Vercel desliga a função por inatividade.
+const dbPath = process.env.VERCEL 
+    ? path.join('/tmp', 'database.sqlite') 
+    : path.resolve(__dirname, 'database.sqlite');
 
 // Ensure directory exists
 if (!fs.existsSync(__dirname)) {
