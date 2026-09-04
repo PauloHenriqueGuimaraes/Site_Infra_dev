@@ -156,7 +156,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .hover-lift:hover { transform: translateY(-3px); }
 .hover-scale { transition: transform 0.2s ease, filter 0.2s ease; filter: grayscale(20%); }
 .hover-scale:hover { transform: scale(1.12); filter: none; }
-.service-card img[src$="/n8n.svg"] {
+.service-card img[src$="/n8n.svg"],
+img.n8n-color {
   filter: invert(42%) sepia(88%) saturate(1570%) hue-rotate(314deg) brightness(100%) contrast(84%) !important;
 }
 
