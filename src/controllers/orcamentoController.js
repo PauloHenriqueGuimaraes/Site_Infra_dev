@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const { supabase, isConfigured } = require('../database/db');
 
 exports.showForm = (req, res) => {
     return res.render('orcamento', {
@@ -7,7 +7,7 @@ exports.showForm = (req, res) => {
     });
 };
 
-exports.submitForm = (req, res) => {
+exports.submitForm = async (req, res) => {
     const nome = String(req.body.nome || '').trim();
     const telefone = String(req.body.telefone || '').trim();
     const categoria = String(req.body.categoria || '').trim();
@@ -17,20 +17,28 @@ exports.submitForm = (req, res) => {
         return res.status(400).send('Nome, telefone e categoria são obrigatórios.');
     }
 
-    return db.run(
-        `INSERT INTO Orcamentos (Nome, Telefone, Categoria, Descricao)
-         VALUES (?, ?, ?, ?)`,
-        [nome, telefone, categoria, descricao],
-        (error) => {
-            if (error) {
-                console.error('Erro ao salvar o orçamento:', error.message);
-                return res.status(500).send('Erro ao salvar o orçamento.');
-            }
+    if (!isConfigured) {
+        return res.status(503).send(
+            'Banco de dados não configurado. Preencha as variáveis do Supabase.'
+        );
+    }
 
-            return res.render('orcamento', {
-                title: 'Orçamento Enviado',
-                success: true
-            });
+    const { error } = await supabase.from('Orcamentos').insert([
+        {
+            Nome: nome,
+            Telefone: telefone,
+            Categoria: categoria,
+            Descricao: descricao
         }
-    );
+    ]);
+
+    if (error) {
+        console.error('Erro ao salvar orçamento no Supabase:', error.message);
+        return res.status(500).send('Erro ao salvar o orçamento.');
+    }
+
+    return res.render('orcamento', {
+        title: 'Orçamento Enviado',
+        success: true
+    });
 };
