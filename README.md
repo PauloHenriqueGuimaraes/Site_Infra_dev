@@ -1,2 +1,2 @@
 # Site_Infra_dev
-PG Tech - Soluções Avançadas de TI
+PG x Tech - Soluções avançadas de TI

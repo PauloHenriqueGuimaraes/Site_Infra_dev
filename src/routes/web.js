@@ -6,7 +6,7 @@ const adminController = require('../controllers/adminController');
 
 // Home and Contact
 router.get('/', homeController.renderIndex);
-router.get('/Contact', homeController.renderContact);
+router.get(['/contact', '/Contact'], homeController.renderContact);
 
 // Orçamento
 router.get('/orcamento', orcamentoController.showForm);

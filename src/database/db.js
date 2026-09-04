@@ -1,14 +1,38 @@
-require('dotenv').config();
-const { createClient } = require('@supabase/supabase-js');
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const dbPath = path.resolve(__dirname, 'database.sqlite');
 
-if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('COLOQUE_SUA_URL_AQUI')) {
-    console.warn('⚠️ AVISO: SUPABASE_URL ou SUPABASE_KEY não configuradas corretamente no arquivo .env!');
-}
+const db = new sqlite3.Database(dbPath, (error) => {
+    if (error) {
+        console.error('Erro ao conectar ao banco de dados SQLite:', error.message);
+        return;
+    }
 
-// Cria o cliente Supabase
-const supabase = createClient(supabaseUrl || 'https://fake.supabase.co', supabaseKey || 'fake-key');
+    console.log(`Banco de dados SQLite conectado: ${dbPath}`);
+});
 
-module.exports = supabase;
+db.serialize(() => {
+    db.run(`
+        CREATE TABLE IF NOT EXISTS Orcamentos (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Nome TEXT NOT NULL,
+            Telefone TEXT NOT NULL,
+            Categoria TEXT NOT NULL,
+            Descricao TEXT,
+            DataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS Usuarios (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Nome TEXT NOT NULL,
+            Email TEXT UNIQUE NOT NULL COLLATE NOCASE,
+            Senha TEXT NOT NULL,
+            DataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+});
+
+module.exports = db;

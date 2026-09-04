@@ -1,117 +1,190 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const supabase = require('../database/db');
+const db = require('../database/db');
 
-const SECRET_KEY = 'pg-tech-secret-key-123'; // Em produção usar variáveis de ambiente
+const SECRET_KEY = process.env.JWT_SECRET || 'pg-tech-secret-key-123';
 
-// Exibir login
 exports.showLogin = (req, res) => {
     const token = req.cookies.admin_token;
+
     if (token) {
         try {
             jwt.verify(token, SECRET_KEY);
             return res.redirect('/admin/dashboard');
-        } catch (err) {}
+        } catch (error) {
+            res.clearCookie('admin_token');
+        }
     }
-    res.render('admin/login', { title: 'Admin Login', error: null });
+
+    return res.render('admin/login', { title: 'Admin Login', error: null });
 };
 
-// Processar login com BD Supabase
-exports.login = async (req, res) => {
-    const { email, password } = req.body;
-    
-    const { data: user, error } = await supabase
-        .from('Usuarios')
-        .select('*')
-        .eq('Email', email)
-        .single();
-        
-    if (error || !user) {
-        return res.render('admin/login', { title: 'Admin Login', error: 'Credenciais inválidas!' });
+exports.login = (req, res) => {
+    const email = String(req.body.email || '').trim().toLowerCase();
+    const password = String(req.body.password || '');
+
+    if (!email || !password) {
+        return res.status(400).render('admin/login', {
+            title: 'Admin Login',
+            error: 'Informe o e-mail e a senha.'
+        });
     }
-    
-    const validPass = bcrypt.compareSync(password, user.Senha);
-    if (!validPass) {
-        return res.render('admin/login', { title: 'Admin Login', error: 'Credenciais inválidas!' });
-    }
-    
-    const token = jwt.sign({ id: user.Id, email: user.Email, nome: user.Nome }, SECRET_KEY, { expiresIn: '8h' });
-    res.cookie('admin_token', token, { httpOnly: true });
-    res.redirect('/admin/dashboard');
+
+    return db.get(
+        'SELECT * FROM Usuarios WHERE LOWER(Email) = ?',
+        [email],
+        (error, user) => {
+            if (error) {
+                console.error('Erro ao consultar usuário:', error.message);
+                return res.status(500).render('admin/login', {
+                    title: 'Admin Login',
+                    error: 'Não foi possível acessar o banco de dados.'
+                });
+            }
+
+            if (!user || !bcrypt.compareSync(password, user.Senha)) {
+                return res.status(401).render('admin/login', {
+                    title: 'Admin Login',
+                    error: 'Credenciais inválidas!'
+                });
+            }
+
+            const token = jwt.sign(
+                { id: user.Id, email: user.Email, nome: user.Nome },
+                SECRET_KEY,
+                { expiresIn: '8h' }
+            );
+
+            res.cookie('admin_token', token, {
+                httpOnly: true,
+                sameSite: 'lax',
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 8 * 60 * 60 * 1000
+            });
+
+            return res.redirect('/admin/dashboard');
+        }
+    );
 };
 
 exports.logout = (req, res) => {
     res.clearCookie('admin_token');
-    res.redirect('/admin');
+    return res.redirect('/admin');
 };
 
-// -- CRUD DE ORÇAMENTOS --
-exports.dashboard = async (req, res) => {
-    const { data: rows, error } = await supabase
-        .from('Orcamentos')
-        .select('*')
-        .order('DataCriacao', { ascending: false });
-        
-    res.render('admin/dashboard', { title: 'Dashboard - Orçamentos', orcamentos: rows || [] });
+exports.dashboard = (req, res) => {
+    db.all(
+        'SELECT * FROM Orcamentos ORDER BY DataCriacao DESC',
+        [],
+        (error, rows) => {
+            if (error) {
+                console.error('Erro ao carregar orçamentos:', error.message);
+            }
+
+            return res.render('admin/dashboard', {
+                title: 'Dashboard - Orçamentos',
+                orcamentos: rows || []
+            });
+        }
+    );
 };
 
-exports.deleteOrcamento = async (req, res) => {
-    const id = req.params.id;
-    await supabase.from('Orcamentos').delete().eq('Id', id);
-    res.redirect('/admin/dashboard');
+exports.deleteOrcamento = (req, res) => {
+    db.run(
+        'DELETE FROM Orcamentos WHERE Id = ?',
+        [req.params.id],
+        (error) => {
+            if (error) {
+                console.error('Erro ao excluir orçamento:', error.message);
+            }
+
+            return res.redirect('/admin/dashboard');
+        }
+    );
 };
 
-// -- CRUD DE USUÁRIOS --
+exports.listUsers = (req, res) => {
+    db.all(
+        'SELECT Id, Nome, Email, DataCriacao FROM Usuarios ORDER BY DataCriacao DESC',
+        [],
+        (error, rows) => {
+            if (error) {
+                console.error('Erro ao carregar usuários:', error.message);
+            }
 
-exports.listUsers = async (req, res) => {
-    const { data: rows, error } = await supabase
-        .from('Usuarios')
-        .select('Id, Nome, Email, DataCriacao')
-        .order('DataCriacao', { ascending: false });
-        
-    res.render('admin/usuarios', { title: 'Gestão de Usuários', usuarios: rows || [] });
+            return res.render('admin/usuarios', {
+                title: 'Gestão de Usuários',
+                usuarios: rows || []
+            });
+        }
+    );
 };
 
 exports.showCreateUser = (req, res) => {
-    res.render('admin/usuario_novo', { title: 'Novo Usuário', error: null });
+    return res.render('admin/usuario_novo', {
+        title: 'Novo Usuário',
+        error: null
+    });
 };
 
-exports.createUser = async (req, res) => {
-    const { nome, email, password } = req.body;
-    
+exports.createUser = (req, res) => {
+    const nome = String(req.body.nome || '').trim();
+    const email = String(req.body.email || '').trim().toLowerCase();
+    const password = String(req.body.password || '');
+
     if (!nome || !email || !password) {
-        return res.render('admin/usuario_novo', { title: 'Novo Usuário', error: 'Todos os campos são obrigatórios.' });
+        return res.status(400).render('admin/usuario_novo', {
+            title: 'Novo Usuário',
+            error: 'Todos os campos são obrigatórios.'
+        });
     }
-    
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
-    
-    const { error } = await supabase
-        .from('Usuarios')
-        .insert([{ Nome: nome, Email: email, Senha: hash }]);
-        
-    if (error) {
-        return res.render('admin/usuario_novo', { title: 'Novo Usuário', error: 'Este e-mail já está em uso ou ocorreu um erro.' });
-    }
-    res.redirect('/admin/usuarios');
+
+    const hash = bcrypt.hashSync(password, 10);
+
+    return db.run(
+        'INSERT INTO Usuarios (Nome, Email, Senha) VALUES (?, ?, ?)',
+        [nome, email, hash],
+        (error) => {
+            if (error) {
+                console.error('Erro ao cadastrar usuário:', error.message);
+                return res.status(409).render('admin/usuario_novo', {
+                    title: 'Novo Usuário',
+                    error: 'Este e-mail já está em uso.'
+                });
+            }
+
+            return res.redirect('/admin/usuarios');
+        }
+    );
 };
 
-exports.deleteUser = async (req, res) => {
-    const id = req.params.id;
-    await supabase.from('Usuarios').delete().eq('Id', id);
-    res.redirect('/admin/usuarios');
+exports.deleteUser = (req, res) => {
+    const id = Number(req.params.id);
+
+    if (id === req.adminUser.id) {
+        return res.redirect('/admin/usuarios');
+    }
+
+    return db.run('DELETE FROM Usuarios WHERE Id = ?', [id], (error) => {
+        if (error) {
+            console.error('Erro ao excluir usuário:', error.message);
+        }
+
+        return res.redirect('/admin/usuarios');
+    });
 };
 
-// Middleware para proteger as rotas
 exports.requireAuth = (req, res, next) => {
     const token = req.cookies.admin_token;
-    if (!token) return res.redirect('/admin');
-    
+
+    if (!token) {
+        return res.redirect('/admin');
+    }
+
     try {
-        const decoded = jwt.verify(token, SECRET_KEY);
-        req.adminUser = decoded;
-        next();
-    } catch (err) {
+        req.adminUser = jwt.verify(token, SECRET_KEY);
+        return next();
+    } catch (error) {
         res.clearCookie('admin_token');
         return res.redirect('/admin');
     }

@@ -1,18 +1,50 @@
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted bg-dark mt-5">
-        <div class="container text-center py-4">
-            &copy; 2026 - PG Tech
+    </main>
+    <footer class="site-footer border-top mt-5">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 py-4">
+            <div class="d-flex align-items-center gap-2">
+                <img src="/images/logo-brand.png" alt="" class="footer-logo" />
+                <span>&copy; 2026 PG x Tech. Todos os direitos reservados.</span>
+            </div>
+            <a href="/contact" class="footer-link">Fale com a nossa equipe <i class="bi bi-arrow-up-right ms-1"></i></a>
         </div>
     </footer>
+
+    <button type="button" class="whatsapp-float" data-bs-toggle="modal" data-bs-target="#whatsappModal" aria-label="Abrir atendimento pelo WhatsApp">
+        <i class="bi bi-whatsapp" aria-hidden="true"></i>
+    </button>
+
+    <div class="modal fade" id="whatsappModal" tabindex="-1" aria-labelledby="whatsappModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered whatsapp-dialog">
+            <div class="modal-content whatsapp-modal">
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body text-center px-4 px-sm-5 pb-4">
+                    <div class="whatsapp-modal-icon"><i class="bi bi-whatsapp" aria-hidden="true"></i></div>
+                    <span class="support-kicker">Atendimento pelo WhatsApp</span>
+                    <h2 class="h3 fw-bold text-white mt-2 mb-3" id="whatsappModalLabel">Falar com a PG x Tech</h2>
+                    <p class="text-light opacity-75 mb-4">Você será redirecionado para o WhatsApp e falará diretamente com o fundador da empresa. Nosso suporte está disponível 24 horas.</p>
+                    <div class="support-pills mb-4" aria-label="Diferenciais do atendimento">
+                        <span><i class="bi bi-person-check-fill" aria-hidden="true"></i> Direto com o fundador</span>
+                        <span><i class="bi bi-clock-fill" aria-hidden="true"></i> 24 horas</span>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="https://wa.me/5514997303059?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20PG%20x%20Tech." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg rounded-pill whatsapp-confirm">
+                            <i class="bi bi-whatsapp me-2" aria-hidden="true"></i>Continuar para o WhatsApp
+                        </a>
+                        <button type="button" class="btn btn-link text-light opacity-75 text-decoration-none" data-bs-dismiss="modal">Agora não</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/site.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
     <script>
         tsParticles.load("tsparticles", {
-            background: { color: { value: "#020617" } },
+            background: { color: { value: "#030305" } },
             fpsLimit: 60,
             interactivity: {
                 events: {
@@ -22,8 +54,8 @@
                 modes: { grab: { distance: 150, links: { opacity: 0.3 } } }
             },
             particles: {
-                color: { value: "#8b5cf6" },
-                links: { color: "#ef4444", distance: 150, enable: true, opacity: 0.1, width: 1 },
+                color: { value: ["#8d18ff", "#e10070", "#ff164f"] },
+                links: { color: "#b312c8", distance: 150, enable: true, opacity: 0.12, width: 1 },
                 move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 0.8, straight: false },
                 number: { density: { enable: true, area: 800 }, value: 40 },
                 opacity: { value: 0.15 },

@@ -1,11 +1,15 @@
 <%- include('partials/header') %>
 
-<div class="container py-6 mt-5 animate-up">
+<div class="quote-page container animate-up">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="text-center mb-5">
-                <h6 class="text-primary fw-bold tracking-widest text-uppercase mb-2">Seu Projeto</h6>
-                <h2 class="display-5 fw-bold text-white mb-4">Solicitar Orçamento</h2>
+            <a href="/" class="quote-back">
+                <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                <span>Voltar ao início</span>
+            </a>
+            <div class="text-center mb-4">
+                <h6 class="text-primary fw-bold tracking-widest text-uppercase mb-2">Seu projeto</h6>
+                <h2 class="display-5 fw-bold text-white mb-4">Solicitar orçamento</h2>
                 <p class="text-light opacity-75">
                     Preencha o formulário abaixo e nossa equipe entrará em contato com a melhor solução para o seu negócio.
                 </p>
@@ -14,17 +18,17 @@
             <% if (success) { %>
                 <div class="alert alert-success bg-success bg-opacity-25 border-success text-white text-center py-4 rounded-4 shadow-lg mb-5">
                     <i class="bi bi-check-circle-fill display-4 text-success mb-3 d-block"></i>
-                    <h4 class="fw-bold">Orçamento Enviado com Sucesso!</h4>
+                    <h4 class="fw-bold">Orçamento enviado com sucesso!</h4>
                     <p class="mb-0 text-light">Recebemos sua solicitação e em breve entraremos em contato no telefone informado.</p>
                 </div>
                 <div class="text-center">
                     <a href="/" class="btn btn-outline-light rounded-pill px-4 py-2">Voltar ao Início</a>
                 </div>
             <% } else { %>
-                <div class="service-card p-4 p-md-5 border-0 shadow-lg bg-dark bg-opacity-25 rounded-4">
+                <div class="quote-form-card service-card p-4 p-md-5 border-0 shadow-lg bg-dark bg-opacity-25 rounded-4">
                     <form action="/orcamento" method="POST">
                         <div class="mb-4">
-                            <label for="nome" class="form-label text-light fw-semibold">Nome Completo</label>
+                            <label for="nome" class="form-label text-light fw-semibold">Nome completo</label>
                             <input type="text" class="form-control form-control-lg rounded-3" id="nome" name="nome" required placeholder="Digite seu nome">
                         </div>
                         
@@ -34,13 +38,13 @@
                         </div>
 
                         <div class="mb-5">
-                            <label for="descricao" class="form-label text-light fw-semibold">Detalhes do Projeto ou Problema (Opcional)</label>
+                            <label for="descricao" class="form-label text-light fw-semibold">Detalhes do projeto ou problema (opcional)</label>
                             <textarea class="form-control rounded-3" id="descricao" name="descricao" rows="4" placeholder="Escreva brevemente o que você precisa, qual é a dor da sua empresa ou o problema que precisa ser resolvido..."></textarea>
                         </div>
 
                         <label class="form-label text-light fw-semibold mb-3">Qual categoria de serviço você precisa?</label>
                         
-                        <div class="row g-3 mb-5">
+                        <div class="row g-3 mb-4">
                             <!-- Infraestrutura -->
                             <div class="col-md-6">
                                 <input type="radio" class="btn-check" name="categoria" id="cat-infra" value="Infraestrutura" required>
@@ -89,7 +93,7 @@
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-lg hover-lift py-3 fw-bold">
-                                Solicitar Orçamento Gratuito
+                                Solicitar orçamento gratuito
                             </button>
                         </div>
                     </form>
@@ -102,19 +106,53 @@
 <style>
     /* Estilização para deixar os radio buttons estilo cards ativos */
     .btn-check:checked + .btn-outline-primary {
-        background: rgba(56, 189, 248, 0.15);
-        border-color: #38bdf8;
+        background: rgba(162, 28, 255, 0.15);
+        border-color: #df0077;
         color: white;
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        box-shadow: 0 0 15px rgba(225, 0, 112, 0.3);
     }
     .btn-outline-primary {
         border-color: rgba(255,255,255,0.1);
         color: #f8fafc;
-        background: rgba(15, 23, 42, 0.5);
+        background: rgba(14, 11, 17, 0.72);
     }
     .btn-outline-primary:hover {
-        background: rgba(15, 23, 42, 0.8);
-        border-color: rgba(56, 189, 248, 0.5);
+        background: rgba(24, 15, 28, 0.88);
+        border-color: rgba(225, 0, 112, 0.5);
+    }
+    .quote-page {
+        padding-top: 3rem;
+        padding-bottom: 0.5rem;
+    }
+    .quote-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 1.5rem;
+        color: rgba(255, 255, 255, 0.72);
+        text-decoration: none;
+        font-size: 0.92rem;
+        font-weight: 600;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .quote-back:hover {
+        color: #fff;
+        transform: translateX(-3px);
+    }
+    .quote-form-card {
+        padding-bottom: 1.5rem !important;
+    }
+    @media (max-width: 767.98px) {
+        .quote-page {
+            padding-top: 2rem;
+            padding-bottom: 0;
+        }
+        .quote-back {
+            margin-bottom: 1.25rem;
+        }
+        .quote-form-card {
+            padding-bottom: 1.25rem !important;
+        }
     }
 </style>
 

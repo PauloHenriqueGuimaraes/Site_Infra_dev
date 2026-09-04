@@ -1,30 +1,36 @@
-const supabase = require('../database/db');
+const db = require('../database/db');
 
 exports.showForm = (req, res) => {
-    res.render('orcamento', { title: 'Solicitar Orçamento', success: false });
+    return res.render('orcamento', {
+        title: 'Solicitar Orçamento',
+        success: false
+    });
 };
 
-exports.submitForm = async (req, res) => {
-    try {
-        const { nome, telefone, categoria, descricao } = req.body;
+exports.submitForm = (req, res) => {
+    const nome = String(req.body.nome || '').trim();
+    const telefone = String(req.body.telefone || '').trim();
+    const categoria = String(req.body.categoria || '').trim();
+    const descricao = String(req.body.descricao || '').trim();
 
-        if (!nome || !telefone || !categoria) {
-            return res.status(400).send('Nome, telefone e categoria são obrigatórios.');
-        }
-
-        const { data, error } = await supabase
-            .from('Orcamentos')
-            .insert([{ Nome: nome, Telefone: telefone, Categoria: categoria, Descricao: descricao || '' }]);
-
-        if (error) {
-            console.error('Erro no Supabase:', error);
-            const urlUsada = process.env.SUPABASE_URL || 'NENHUMA (Usou a falsa)';
-            return res.status(500).send(`Erro ao salvar no banco (URL: ${urlUsada}): ${error.message}`);
-        }
-        
-        res.render('orcamento', { title: 'Orçamento Enviado', success: true });
-    } catch (err) {
-        console.error('Erro crítico no servidor:', err);
-        return res.status(500).send(`Erro interno: ${err.message || err}`);
+    if (!nome || !telefone || !categoria) {
+        return res.status(400).send('Nome, telefone e categoria são obrigatórios.');
     }
+
+    return db.run(
+        `INSERT INTO Orcamentos (Nome, Telefone, Categoria, Descricao)
+         VALUES (?, ?, ?, ?)`,
+        [nome, telefone, categoria, descricao],
+        (error) => {
+            if (error) {
+                console.error('Erro ao salvar o orçamento:', error.message);
+                return res.status(500).send('Erro ao salvar o orçamento.');
+            }
+
+            return res.render('orcamento', {
+                title: 'Orçamento Enviado',
+                success: true
+            });
+        }
+    );
 };

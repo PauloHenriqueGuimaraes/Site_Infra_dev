@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center mb-5">
         <div>
             <h6 class="text-secondary fw-bold tracking-widest text-uppercase mb-2">Painel de Controle</h6>
-            <h2 class="display-6 fw-bold text-white mb-0">Gestão de Orçamentos</h2>
+            <h2 class="display-6 fw-bold text-white mb-0">Gestão de orçamentos</h2>
             <div class="title-separator bg-gradient mt-2" style="width: 80px; background: linear-gradient(90deg, #64748b, #94a3b8);"></div>
         </div>
         <div class="d-flex gap-3">
@@ -23,9 +23,9 @@
                 <thead class="border-bottom border-secondary">
                     <tr>
                         <th class="py-3 text-secondary">Data</th>
-                        <th class="py-3 text-secondary">Nome do Cliente</th>
+                        <th class="py-3 text-secondary">Nome do cliente</th>
                         <th class="py-3 text-secondary">Telefone / WhatsApp</th>
-                        <th class="py-3 text-secondary">Categoria Desejada</th>
+                        <th class="py-3 text-secondary">Categoria desejada</th>
                         <th class="py-3 text-secondary text-end">Ações</th>
                     </tr>
                 </thead>
@@ -55,7 +55,7 @@
                             </td>
                             <td class="py-3 text-end">
                                 <div class="d-flex justify-content-end gap-2">
-                                    <a href="https://wa.me/55<%= orc.Telefone.replace(/\D/g, '') %>?text=Olá <%= orc.Nome.split(' ')[0] %>, recebemos sua solicitação de orçamento sobre <%= orc.Categoria %> pela PG Tech!" target="_blank" class="btn btn-sm btn-success rounded-pill px-3">
+                                    <a href="https://wa.me/55<%= orc.Telefone.replace(/\D/g, '') %>?text=Olá <%= orc.Nome.split(' ')[0] %>, recebemos sua solicitação de orçamento sobre <%= orc.Categoria %> pela PG x Tech!" target="_blank" class="btn btn-sm btn-success rounded-pill px-3">
                                         <i class="bi bi-whatsapp me-1"></i>Responder
                                     </a>
                                     <form action="/admin/orcamento/deletar/<%= orc.Id %>" method="POST" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este orçamento permanentemente?');">
@@ -88,7 +88,7 @@
                     <div class="modal-content bg-dark text-light border border-secondary border-opacity-25 shadow-lg">
                         <div class="modal-header border-secondary">
                             <h5 class="modal-title text-secondary" id="descModalLabel<%= orc.Id %>">
-                                <i class="bi bi-card-text me-2"></i>Detalhes do Projeto
+                                <i class="bi bi-card-text me-2"></i>Detalhes do projeto
                             </h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
                         </div>
