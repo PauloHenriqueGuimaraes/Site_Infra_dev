@@ -1,24 +1,64 @@
 <%- include('partials/header') %>
-<div class="container py-5 mt-5">
-    <div class="text-center mb-5 animate-up">
-        <h1 class="display-5 fw-bold text-gradient">Fale conosco</h1>
-        <p class="lead text-light opacity-75">Tire dúvidas, solicite orçamentos ou fale diretamente com o fundador da PG x Tech, 24 horas por dia.</p>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 text-center">
-            <div class="service-card animate-up delay-1 p-4 p-md-5 border border-success border-opacity-25 shadow-lg">
-                <i class="bi bi-whatsapp text-success mb-4" style="font-size: 4rem;"></i>
-                <h3 class="fw-bold text-white mb-3">Atendimento rápido</h3>
-                <p class="text-light opacity-75 mb-5">
-                    Atendimento técnico sem intermediários, direto com o fundador da empresa. Estamos disponíveis 24 horas para ajudar.
-                </p>
-                
-                <button type="button" class="btn btn-success btn-lg rounded-pill shadow-lg hover-lift px-5 py-3 fw-bold fs-5" data-bs-toggle="modal" data-bs-target="#whatsappModal">
-                    <i class="bi bi-whatsapp me-2"></i> Chamar no WhatsApp
-                </button>
-            </div>
+<section class="contact-page">
+    <div class="container">
+        <div class="contact-intro text-center animate-up">
+            <span class="support-kicker">Contato</span>
+            <h1 class="display-5 fw-bold text-white">Como podemos ajudar?</h1>
+            <p>Fale com a PG x Tech pelo canal que preferir. Atendimento direto, simples e sem intermediários.</p>
         </div>
+
+        <div class="contact-grid">
+            <article class="contact-channel animate-up delay-1">
+                <div class="contact-channel-icon contact-channel-icon-whatsapp" aria-hidden="true">
+                    <i class="bi bi-whatsapp"></i>
+                </div>
+                <div>
+                    <span class="contact-label">WhatsApp</span>
+                    <h2>Converse com nossa equipe</h2>
+                    <p>Para atendimento rápido, dúvidas e solicitações de orçamento.</p>
+                </div>
+                <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#whatsappModal">
+                    Chamar no WhatsApp <i class="bi bi-arrow-up-right ms-2" aria-hidden="true"></i>
+                </button>
+            </article>
+
+            <article class="contact-channel animate-up delay-2">
+                <div class="contact-channel-icon" aria-hidden="true">
+                    <i class="bi bi-envelope"></i>
+                </div>
+                <div>
+                    <span class="contact-label">E-mail</span>
+                    <h2>Envie sua mensagem</h2>
+                    <p>Ideal para propostas, documentos e assuntos que precisam de mais detalhes.</p>
+                </div>
+                <a class="contact-email" href="mailto:gerencia@groupgxtech.com.br">
+                    <span>gerencia@groupgxtech.com.br</span>
+                    <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+                </a>
+            </article>
+        </div>
+
+        <section class="coverage-panel animate-up delay-3" aria-labelledby="coverage-title">
+            <div class="coverage-copy">
+                <div class="coverage-icon" aria-hidden="true"><i class="bi bi-geo-alt"></i></div>
+                <span class="contact-label">Onde atendemos</span>
+                <h2 id="coverage-title">Americana e todo o Brasil</h2>
+                <p>Estamos na região de Americana, SP, e atendemos empresas de todo o país com suporte remoto e projetos sob medida.</p>
+                <div class="coverage-tags" aria-label="Cobertura de atendimento">
+                    <span><i class="bi bi-geo-alt-fill" aria-hidden="true"></i> Região de Americana</span>
+                    <span><i class="bi bi-globe-americas" aria-hidden="true"></i> Atendimento nacional</span>
+                </div>
+            </div>
+            <div class="coverage-map">
+                <iframe
+                    title="Mapa da região de Americana, São Paulo"
+                    src="https://www.google.com/maps?q=Americana%2C%20SP%2C%20Brasil&amp;output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
     </div>
-</div>
+</section>
 <%- include('partials/footer') %>
