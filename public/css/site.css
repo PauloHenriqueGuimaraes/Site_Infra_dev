@@ -619,7 +619,6 @@ hr.border-gray-800 { opacity: 1; }
   min-height: 300px;
   display: block;
   border: 0;
-  filter: grayscale(1) invert(0.9) contrast(0.9);
 }
 
 @keyframes fadeInUp {
